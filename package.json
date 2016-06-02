@@ -1,11 +1,12 @@
 {
-  "name": "get-started",
+  "name": "music",
   "version": "1.0.0",
-  "description": "A repo with code about how to make simple Netbeast apps.",
+  "description": "Netbeast music app",
   "main": "server.js",
   "dependencies": {
     "express": "^4.12.3",
     "minimist": "^1.1.0",
+    "multer": "^1.1.0",
     "netbeast": "^0.0.6"
   },
   "devDependencies": {},
@@ -26,7 +27,7 @@
     "netbeast",
     "netbeast.co"
   ],
-  "author": "your@email.com",
+  "author": "luis@netbeast.co",
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/netbeast-co/get-started/issues"
