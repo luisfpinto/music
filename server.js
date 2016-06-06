@@ -20,15 +20,16 @@ var app = express()
 //Upload files
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
+var originalname, path
 
 //Netbeast API
 var netbeast = require('netbeast')
 
-var bodyParser = require('body-parser')
+/*var bodyParser = require('body-parser')
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
-})); 
+})); */
 
 
 // Netbeast apps need to accept the port to be launched by parameters
@@ -42,13 +43,24 @@ var server = app.listen(argv.port || 31416, function () {
   console.log('Example app listening at http://%s:%s', host, port)
 })
 
-app.post('/upload',upload.single('track'), function (req,res) {
+app.post('/upload', upload.single('file'), function (req,res) {
 
-	var originalname = req.file.originalname
-	var mimetype = req.file.mimetype
-	var path = req.file.path
-	console.log(req.file)
+	if(!req.file) res.send('Not track selected')
+	originalname = req.file.originalname
+	path = req.file.path
 
-	if(mimetype !== 'audio/mp3') return res.status(406).send('File format not acceptable')
+	if(req.file.mimetype !== 'audio/mp3') return res.status(406).send('File format not acceptable')
+})
 
+app.post('/play', function (req,res) {
+	console.log('playing')
+	console.log(originalname)
+	/*
+	beast.find().then(function () {
+       netbeast('sound').set({volume: 30, status: 'play', track: path})
+		.then(function (data) {
+           res.send("Playing" + originalname)
+		})
+		.catch(function (error) {})
+	})*/
 })

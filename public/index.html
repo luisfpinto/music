@@ -1,16 +1,20 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="style.css">
 <script type="text/javascript" src="index.js"></script>
+<script src="./dropzone.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
-<p>Drag your track or click here to upload</p>
+<form action="/upload" class="dropzone">
+  <div class="fallback">
+    <input name="file" type="file" multiple />
+  </div>
+</form>
 
-<form action="/upload" method="post", enctype="multipart/form-data">
-<input type="file" name="track">
-<input type="submit" value="PlaySong">
+<form action="/play" method="post">
+    <button name="submit" type="submit">PLAY</button>
 </form>
 
 </body>
