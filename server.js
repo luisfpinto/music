@@ -59,33 +59,61 @@ var server = app.listen(argv.port || 31416, function () {
 app.post('/upload', upload.single('file'), function (req,res) {
 
 	originalname = req.file.originalname
-	if(req.file.mimetype !== 'audio/mp3' && req.file.mimetype !== 'audio/mp4' && req.file.mimetype != 'audio/mpeg') return res.status(406).send('File format not acceptable')
+  
+	if(req.file.mimetype !== 'audio/mp3' && req.file.mimetype !== 'audio/mp4' && req.file.mimetype != 'audio/mpeg') {
+    netbeast.error('File Format not acceptable')    
+    res.sendStatus(405)
+  } 
+  netbeast.find().then(function () {
+       netbeast('music').set({track: 'http://' + process.env.NETBEAST + '/i/music/uploads/' + originalname, volume: 20})
+    .then(function (data) {
+           netbeast.info('Playing: ' + originalname)
+           res.sendStatus(200)
+    })
+    .catch(function (error) {})
+  })
 })
 
 app.post('/play', function (req,res) {
 
   var volume = req.body.volume
-  console.log('Play')
 
 	netbeast.find().then(function () {
-       netbeast('music').set({track: 'http://' + process.env.NETBEAST + '/i/music/uploads/' + originalname, volume: volume})
+       netbeast('music').set({status: 'play', volume: volume})
 		.then(function (data) {
-           res.send("Playing" + originalname)
+           netbeast.info('Playing: ' + originalname)
+           res.sendStatus(200)
 		})
 		.catch(function (error) {})
 	})
 })
 
+app.post('/pause', function (req,res) {
+
+  var volume = req.body.volume
+
+  netbeast.find().then(function () {
+       netbeast('music').set({status: 'pause'})
+    .then(function (data) {
+           netbeast.info('Song Paused')
+           res.sendStatus(200)
+    })
+    .catch(function (error) {})
+  })
+  res.sendStatus(200)
+})
+
 app.post('/volume', function (req,res) {
 
   var volume = req.body.volume
-  console.log('Volume')
 
   netbeast.find().then(function () {
        netbeast('music').set({volume: volume})
     .then(function (data) {
-           res.send("Playing" + originalname)
+           res.sendStatus(200)
     })
-    .catch(function (error) {})
+    .catch(function (error) {
+      res.status(500).json(error)
+    })
   })
 })

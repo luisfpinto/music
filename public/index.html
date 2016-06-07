@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script type="text/javascript" src="index.js"></script>
 	<script src="./dropzone.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
@@ -15,10 +16,11 @@
 				<input name="file" type="file" multiple />
 			</div>
 		</form>
-		<form id="control" action="/play" method="post" enctype='application/json'>
-			<label>Volume:<input name="volume" type="range"  min="0" max="100" value="20" onchange='changeState()'></label><br>
-			<button type="submit">PLAY</button>
-		</form>
+
+		<label>Volume:<input name="volume" type="range" id="volume"  min="0" max="100" value="20" onchange="sendData('/volume')"></label><br>
+		<button onclick="sendData('/play')">PLAY</button>
+		<button onclick="sendData('/pause')">PAUSE</button>
+
 	</div>
 </body>
 </html>

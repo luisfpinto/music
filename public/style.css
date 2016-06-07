@@ -2,6 +2,9 @@ body {
 	font-family: 'Fira Sans', sans-serif;
 }
 
+button {
+	margin-top: 15px;
+}
 
 .container {
 	display: block;
@@ -22,6 +25,10 @@ body {
 	font-size: 3vw;
 }
 
-.dz-image, .dz-success-mark, .dz-error-mark, .dz-size {
+.dz-image, .dz-success-mark, .dz-error-mark, .dz-size, .dz-error-message, .dz-filename {
 	display: none;
+}
+
+#volume {
+	margin-left: 20px;
 }
