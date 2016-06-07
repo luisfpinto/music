@@ -5,9 +5,10 @@
   "main": "server.js",
   "dependencies": {
     "express": "^4.12.3",
+    "mime": "^1.3.4",
     "minimist": "^1.1.0",
     "multer": "^1.1.0",
-    "netbeast": "0.0.6"
+    "netbeast": "^1.1.0"
   },
   "devDependencies": {},
   "scripts": {
