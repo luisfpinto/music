@@ -18,10 +18,14 @@
 var express = require('express')
 var app = express()
 var mime = require('mime')
+var bodyParser = require('body-parser')
+
+//Netbeast API
+var netbeast = require('netbeast')
 
 //Upload files
 var multer  = require('multer')
-var originalname, path
+var originalname
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -33,9 +37,12 @@ var storage = multer.diskStorage({
 })
 var upload = multer({ storage: storage });
 
-//Netbeast API
-var netbeast = require('netbeast')
+//Parse Body
+app.use(bodyParser.json())
 
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 // Netbeast apps need to accept the port to be launched by parameters
 var argv = require('minimist')(process.argv.slice(2))
@@ -52,23 +59,33 @@ var server = app.listen(argv.port || 31416, function () {
 app.post('/upload', upload.single('file'), function (req,res) {
 
 	originalname = req.file.originalname
-	path = req.file.path
-
-	if(req.file.mimetype !== 'audio/mp3') return res.status(406).send('File format not acceptable')
-
+	if(req.file.mimetype !== 'audio/mp3' && req.file.mimetype !== 'audio/mp4' && req.file.mimetype != 'audio/mpeg') return res.status(406).send('File format not acceptable')
 })
 
 app.post('/play', function (req,res) {
-	/*console.log('playing')
-	console.log(originalname)
-	console.log(path)*/
-	
-	//if(!req.file) res.send('Not track selected')
+
+  var volume = req.body.volume
+  console.log('Play')
+
 	netbeast.find().then(function () {
-       netbeast('music').set({track: 'http://192.168.0.8:8000/i/music/uploads/test.mp3', volume: 10})
+       netbeast('music').set({track: 'http://' + process.env.NETBEAST + '/i/music/uploads/' + originalname, volume: volume})
 		.then(function (data) {
            res.send("Playing" + originalname)
 		})
 		.catch(function (error) {})
 	})
+})
+
+app.post('/volume', function (req,res) {
+
+  var volume = req.body.volume
+  console.log('Volume')
+
+  netbeast.find().then(function () {
+       netbeast('music').set({volume: volume})
+    .then(function (data) {
+           res.send("Playing" + originalname)
+    })
+    .catch(function (error) {})
+  })
 })

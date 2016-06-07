@@ -1,21 +1,24 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script type="text/javascript" src="index.js"></script>
-<script src="./dropzone.js"></script>
-<link rel="stylesheet" type="text/css" href="style.css">
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script type="text/javascript" src="index.js"></script>
+	<script src="./dropzone.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link href='https://fonts.googleapis.com/css?family=Fira+Sans' rel='stylesheet' type='text/css'>
 </head>
+
 <body>
-
-<form action="/upload" class="dropzone">
-  <div class="fallback">
-    <input name="file" type="file" multiple />
-  </div>
-</form>
-
-<form action="/play" method="post">
-    <button name="submit" type="submit">PLAY</button>
-</form>
-
+	<div class="container">
+		<form action="/upload" class="dropzone">
+			<div class="fallback">
+				<input name="file" type="file" multiple />
+			</div>
+		</form>
+		<form id="control" action="/play" method="post" enctype='application/json'>
+			<label>Volume:<input name="volume" type="range"  min="0" max="100" value="20" onchange='changeState()'></label><br>
+			<button type="submit">PLAY</button>
+		</form>
+	</div>
 </body>
 </html>

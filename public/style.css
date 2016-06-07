@@ -1,0 +1,27 @@
+body {
+	font-family: 'Fira Sans', sans-serif;
+}
+
+
+.container {
+	display: block;
+	text-align: center;
+}
+
+.dropzone {
+	border: 2px dashed black;
+	height: 200px;
+	margin-left: 90px;
+	margin-right: 90px;
+	margin-bottom: 50px
+}
+
+.dz-message {
+	color:green;
+	line-height: 200px;
+	font-size: 3vw;
+}
+
+.dz-image, .dz-success-mark, .dz-error-mark, .dz-size {
+	display: none;
+}
