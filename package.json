@@ -29,6 +29,7 @@
     "netbeast",
     "netbeast.co"
   ],
+  "logo": "public/img/logo.png",
   "author": "luis@netbeast.co",
   "license": "AGPL-3.0",
   "bugs": {
